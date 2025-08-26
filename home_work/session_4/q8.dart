@@ -7,7 +7,7 @@ void main() {
 
   bool a1 = a > b;
   bool a2 = a != b;
-  bool a3 = a + b >= b;
+  bool a3 = a + b >= c;
 
   print(a1);
   print(a2);

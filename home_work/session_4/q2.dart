@@ -5,7 +5,7 @@ void main() {
 
   countryCodes['Qatar'] = 'QA';
   print(countryCodes);
-  print(countryCodes.length);
+  print(countryCodes..keys.length);
 
   if (countryCodes.containsValue('JO')) {
     print('Jordan is here');
