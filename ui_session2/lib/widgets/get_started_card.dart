@@ -32,7 +32,7 @@ class GetStartedCard extends StatelessWidget {
                   Text(
                     'Hello! 👋',
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
