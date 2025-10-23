@@ -1,15 +1,16 @@
+import 'package:bmi_calculators/widgets/custom_title.dart';
 import 'package:flutter/material.dart';
 
-class CustomHeightView extends StatelessWidget {
-  const CustomHeightView({
-    super.key,
-    required this.height,
-    required this.onChanged,
-  });
+class CustomHeightView extends StatefulWidget {
+  const CustomHeightView({super.key, required this.onHeightChanged});
+  final ValueChanged<double> onHeightChanged;
 
-  final double height;
-  final ValueChanged<double> onChanged;
+  @override
+  State<CustomHeightView> createState() => _CustomHeightViewState();
+}
 
+class _CustomHeightViewState extends State<CustomHeightView> {
+  double height = 174;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,15 +23,7 @@ class CustomHeightView extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Text(
-              'HEIGHT',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF8D8E9D),
-              ),
-            ),
+            CustomTitle(titel: 'HEIGHT'),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -58,6 +51,7 @@ class CustomHeightView extends StatelessWidget {
             ),
             SliderTheme(
               data: SliderThemeData(
+                trackHeight: 1,
                 thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
               ),
               child: Slider(
@@ -65,9 +59,14 @@ class CustomHeightView extends StatelessWidget {
                 max: 220,
                 divisions: 170,
                 activeColor: Colors.white,
+                inactiveColor: Colors.grey,
                 thumbColor: Colors.red,
                 value: height,
-                onChanged: onChanged,
+                onChanged: (value) {
+                  height = value;
+                  setState(() {});
+                  widget.onHeightChanged(height);
+                },
               ),
             ),
           ],

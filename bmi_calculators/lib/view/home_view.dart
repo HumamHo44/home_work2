@@ -12,52 +12,38 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
+double height = 0;
+
+int weight = 0;
+
+int age = 0;
+
+String gender = '';
+
 class _HomeViewState extends State<HomeView> {
-  String selectedGender = '';
-  double height = 50;
-  int weight = 60;
-  int age = 25;
-
-  void onGenderSelected(String gender) {
-    setState(() {
-      selectedGender = gender;
-    });
-  }
-
-  void onHeightChanged(double value) {
-    setState(() {
-      height = value;
-    });
-  }
-
-  void onWeightIncrement() => setState(() => weight++);
-  void onWeightDecrement() {
-    if (weight > 1) setState(() => weight--);
-  }
-
-  void onAgeIncrement() => setState(() => age++);
-  void onAgeDecrement() {
-    if (age > 1) setState(() => age--);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         GenderSession(
-          selectedGender: selectedGender,
-          onGenderSelected: onGenderSelected,
+          onGenderChanged: (value) {
+            gender = value;
+          },
         ),
         SizedBox(height: 40),
-        CustomHeightView(height: height, onChanged: onHeightChanged),
+        CustomHeightView(
+          onHeightChanged: (value) {
+            height = value;
+          },
+        ),
         SizedBox(height: 50),
         AgeAndWidthSession(
-          weight: weight,
-          age: age,
-          onWeightIncrement: onWeightIncrement,
-          onWeightDecrement: onWeightDecrement,
-          onAgeIncrement: onAgeIncrement,
-          onAgeDecrement: onAgeDecrement,
+          onAgeChanged: (value) {
+            age = value;
+          },
+          onWeightChanged: (value) {
+            weight = value;
+          },
         ),
         SizedBox(height: 190),
         ButtonCalculate(

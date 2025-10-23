@@ -1,3 +1,5 @@
+import 'package:bmi_calculators/widgets/custom_decrement_button.dart';
+import 'package:bmi_calculators/widgets/custom_title.dart';
 import 'package:flutter/material.dart';
 
 class CustomAgeAndWidthView extends StatelessWidget {
@@ -18,8 +20,6 @@ class CustomAgeAndWidthView extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 190,
-          height: 180,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Color(0xFF171730),
@@ -27,14 +27,7 @@ class CustomAgeAndWidthView extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: const Color(0xFF8D8E9D),
-                ),
-              ),
+              CustomTitle(titel: title),
               Text(
                 value,
                 style: TextStyle(
@@ -45,30 +38,10 @@ class CustomAgeAndWidthView extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF8D8E9D),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: IconButton(
-                      onPressed: onDecrement,
-                      icon: Icon(Icons.remove, size: 40, color: Colors.white),
-                    ),
-                  ),
+                  CustomDecrementButton(onDecrement: onDecrement),
                   SizedBox(width: 20),
-
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF8D8E9D),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: IconButton(
-                      onPressed: onIncrement,
-                      icon: Icon(Icons.add, size: 40, color: Colors.white),
-                    ),
-                  ),
+                  CustomDecrementButton(onDecrement: onIncrement),
                 ],
               ),
             ],

@@ -1,4 +1,3 @@
-// lib/widgets/custom_gender_widgets.dart
 import 'package:flutter/material.dart';
 
 class CustomGenderWidgets extends StatelessWidget {
@@ -27,7 +26,6 @@ class CustomGenderWidgets extends StatelessWidget {
             : const Color(0xFF090B25),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         padding: const EdgeInsets.all(20),
-        minimumSize: const Size(180, 150),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

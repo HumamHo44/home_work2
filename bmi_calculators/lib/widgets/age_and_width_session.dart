@@ -1,45 +1,72 @@
 import 'package:bmi_calculators/widgets/custom_age_and_width_view.dart';
 import 'package:flutter/material.dart';
 
-class AgeAndWidthSession extends StatelessWidget {
+class AgeAndWidthSession extends StatefulWidget {
   const AgeAndWidthSession({
     super.key,
-    required this.weight,
-    required this.age,
-    required this.onWeightIncrement,
-    required this.onWeightDecrement,
-    required this.onAgeIncrement,
-    required this.onAgeDecrement,
+    required this.onAgeChanged,
+    required this.onWeightChanged,
   });
+  final ValueChanged<int> onAgeChanged;
+  final ValueChanged<int> onWeightChanged;
 
-  final int weight;
-  final int age;
-  final VoidCallback onWeightIncrement;
-  final VoidCallback onWeightDecrement;
-  final VoidCallback onAgeIncrement;
-  final VoidCallback onAgeDecrement;
+  @override
+  State<AgeAndWidthSession> createState() => _AgeAndWidthSessionState();
+}
+
+class _AgeAndWidthSessionState extends State<AgeAndWidthSession> {
+  int weight = 60;
+  int age = 20;
+
+  void incrementWeight() {
+    setState(() => weight++);
+    widget.onWeightChanged(weight);
+  }
+
+  void decrementWeight() {
+    if (weight > 1) {
+      setState(() => weight--);
+      widget.onWeightChanged(weight);
+    }
+  }
+
+  void incrementAge() {
+    setState(() => age++);
+    widget.onAgeChanged(age);
+  }
+
+  void decrementAge() {
+    if (age > 1) {
+      setState(() => age--);
+      widget.onAgeChanged(age);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: CustomAgeAndWidthView(
-            title: 'WEIGHT',
-            value: weight.toString(),
-            onIncrement: onWeightIncrement,
-            onDecrement: onWeightDecrement,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: [
+          Expanded(
+            child: CustomAgeAndWidthView(
+              title: 'WEIGHT',
+              value: weight.toString(),
+              onIncrement: incrementWeight,
+              onDecrement: decrementWeight,
+            ),
           ),
-        ),
-        Expanded(
-          child: CustomAgeAndWidthView(
-            title: 'AGE',
-            value: age.toString(),
-            onIncrement: onAgeIncrement,
-            onDecrement: onAgeDecrement,
+          const SizedBox(width: 16),
+          Expanded(
+            child: CustomAgeAndWidthView(
+              title: 'AGE',
+              value: age.toString(),
+              onIncrement: incrementAge,
+              onDecrement: decrementAge,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
