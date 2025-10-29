@@ -1,49 +1,40 @@
+import 'package:bmi_calculators/models/bmi_input_model.dart';
 import 'package:bmi_calculators/widgets/custom_age_and_width_view.dart';
 import 'package:flutter/material.dart';
 
 class AgeAndWidthSession extends StatefulWidget {
-  const AgeAndWidthSession({
-    super.key,
-    required this.onAgeChanged,
-    required this.onWeightChanged,
-  });
-  final ValueChanged<int> onAgeChanged;
-  final ValueChanged<int> onWeightChanged;
+  const AgeAndWidthSession({super.key, required this.bmiInputModel});
+  final BmiInputModel bmiInputModel;
 
   @override
   State<AgeAndWidthSession> createState() => _AgeAndWidthSessionState();
 }
 
 class _AgeAndWidthSessionState extends State<AgeAndWidthSession> {
-  int weight = 60;
-  int age = 20;
-
   void incrementWeight() {
-    setState(() => weight++);
-    widget.onWeightChanged(weight);
+    setState(() => widget.bmiInputModel.weight++);
   }
 
   void decrementWeight() {
-    if (weight > 1) {
-      setState(() => weight--);
-      widget.onWeightChanged(weight);
+    if (widget.bmiInputModel.weight > 1) {
+      setState(() => widget.bmiInputModel.weight--);
     }
   }
 
   void incrementAge() {
-    setState(() => age++);
-    widget.onAgeChanged(age);
+    setState(() => widget.bmiInputModel.age++);
   }
 
   void decrementAge() {
-    if (age > 1) {
-      setState(() => age--);
-      widget.onAgeChanged(age);
+    if (widget.bmiInputModel.age > 1) {
+      setState(() => widget.bmiInputModel.age--);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final model = widget.bmiInputModel;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
@@ -51,7 +42,7 @@ class _AgeAndWidthSessionState extends State<AgeAndWidthSession> {
           Expanded(
             child: CustomAgeAndWidthView(
               title: 'WEIGHT',
-              value: weight.toString(),
+              value: model.weight.toString(),
               onIncrement: incrementWeight,
               onDecrement: decrementWeight,
             ),
@@ -60,7 +51,7 @@ class _AgeAndWidthSessionState extends State<AgeAndWidthSession> {
           Expanded(
             child: CustomAgeAndWidthView(
               title: 'AGE',
-              value: age.toString(),
+              value: model.age.toString(),
               onIncrement: incrementAge,
               onDecrement: decrementAge,
             ),

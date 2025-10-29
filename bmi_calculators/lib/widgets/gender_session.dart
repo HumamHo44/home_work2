@@ -1,9 +1,10 @@
+import 'package:bmi_calculators/models/bmi_input_model.dart';
 import 'package:bmi_calculators/widgets/custom_gender_widgets.dart';
 import 'package:flutter/material.dart';
 
 class GenderSession extends StatefulWidget {
-  const GenderSession({super.key, required this.onGenderChanged});
-  final Function(String) onGenderChanged;
+  const GenderSession({super.key, required this.bmiInputModel});
+  final BmiInputModel bmiInputModel;
 
   @override
   State<GenderSession> createState() => _GenderSessionState();
@@ -23,12 +24,12 @@ class _GenderSessionState extends State<GenderSession> {
             child: CustomGenderWidgets(
               title: 'MALE',
               icon: Icons.male,
-              color: selectedGender == 'male' ? Colors.blue : Colors.white,
-              isSelected: selectedGender == 'male',
+              color: selectedGender == 'Male' ? Colors.blue : Colors.white,
+              isSelected: selectedGender == 'Male',
               onTap: () {
-                selectedGender = 'male';
+                selectedGender = 'Male';
+                widget.bmiInputModel.gender = 'Mele';
                 setState(() {});
-                widget.onGenderChanged(selectedGender);
               },
             ),
           ),
@@ -37,12 +38,13 @@ class _GenderSessionState extends State<GenderSession> {
             child: CustomGenderWidgets(
               title: 'FEMALE',
               icon: Icons.female,
-              color: selectedGender == 'female' ? Colors.pink : Colors.white,
-              isSelected: selectedGender == 'female',
+              color: selectedGender == 'Female' ? Colors.pink : Colors.white,
+              isSelected: selectedGender == 'Female',
               onTap: () {
-                selectedGender = 'female';
+                selectedGender = 'Female';
+                widget.bmiInputModel.gender = 'Female';
+
                 setState(() {});
-                widget.onGenderChanged(selectedGender);
               },
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:bmi_calculators/models/bmi_input_model.dart';
 import 'package:bmi_calculators/view/result_view.dart';
 import 'package:bmi_calculators/widgets/age_and_width_session.dart';
 import 'package:bmi_calculators/widgets/button_calculate.dart';
@@ -12,46 +13,26 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-double height = 0;
-
-int weight = 0;
-
-int age = 0;
-
-String gender = '';
+BmiInputModel bmiInputModel = BmiInputModel();
 
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GenderSession(
-          onGenderChanged: (value) {
-            gender = value;
-          },
-        ),
+        GenderSession(bmiInputModel: bmiInputModel),
         SizedBox(height: 40),
-        CustomHeightView(
-          onHeightChanged: (value) {
-            height = value;
-          },
-        ),
+        CustomHeightView(bmiInputModel: bmiInputModel),
         SizedBox(height: 50),
-        AgeAndWidthSession(
-          onAgeChanged: (value) {
-            age = value;
-          },
-          onWeightChanged: (value) {
-            weight = value;
-          },
-        ),
+        AgeAndWidthSession(bmiInputModel: bmiInputModel),
         SizedBox(height: 190),
         ButtonCalculate(
           onPressed: () {
+            print(bmiInputModel.toString());
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => ResultView(height: height, weight: weight),
+                builder: (context) => ResultView(bmiInputModel: bmiInputModel),
               ),
             );
           },

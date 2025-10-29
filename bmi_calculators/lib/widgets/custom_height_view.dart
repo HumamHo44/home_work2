@@ -1,16 +1,16 @@
+import 'package:bmi_calculators/models/bmi_input_model.dart';
 import 'package:bmi_calculators/widgets/custom_title.dart';
 import 'package:flutter/material.dart';
 
 class CustomHeightView extends StatefulWidget {
-  const CustomHeightView({super.key, required this.onHeightChanged});
-  final ValueChanged<double> onHeightChanged;
+  const CustomHeightView({super.key, required this.bmiInputModel});
+  final BmiInputModel bmiInputModel;
 
   @override
   State<CustomHeightView> createState() => _CustomHeightViewState();
 }
 
 class _CustomHeightViewState extends State<CustomHeightView> {
-  double height = 174;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,7 +28,7 @@ class _CustomHeightViewState extends State<CustomHeightView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  height.toStringAsFixed(0),
+                  widget.bmiInputModel.height.toStringAsFixed(0),
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
@@ -61,11 +61,10 @@ class _CustomHeightViewState extends State<CustomHeightView> {
                 activeColor: Colors.white,
                 inactiveColor: Colors.grey,
                 thumbColor: Colors.red,
-                value: height,
+                value: widget.bmiInputModel.height,
                 onChanged: (value) {
-                  height = value;
+                  widget.bmiInputModel.height = value;
                   setState(() {});
-                  widget.onHeightChanged(height);
                 },
               ),
             ),

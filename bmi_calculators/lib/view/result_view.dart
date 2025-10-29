@@ -1,14 +1,14 @@
+import 'package:bmi_calculators/models/bmi_input_model.dart';
 import 'package:flutter/material.dart';
 
 class ResultView extends StatelessWidget {
-  const ResultView({super.key, required this.height, required this.weight});
+  const ResultView({super.key, required this.bmiInputModel});
 
-  final double height;
-  final int weight;
+  final BmiInputModel bmiInputModel;
 
   double get bmi {
-    final heightInMeters = height / 100;
-    return weight / (heightInMeters * heightInMeters);
+    final heightInMeters = bmiInputModel.height / 100;
+    return bmiInputModel.weight / (heightInMeters * heightInMeters);
   }
 
   String get bmiCategory {

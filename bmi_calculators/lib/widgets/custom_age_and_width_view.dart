@@ -1,4 +1,4 @@
-import 'package:bmi_calculators/widgets/custom_decrement_button.dart';
+import 'package:bmi_calculators/widgets/custom_icon_button.dart';
 import 'package:bmi_calculators/widgets/custom_title.dart';
 import 'package:flutter/material.dart';
 
@@ -39,9 +39,12 @@ class CustomAgeAndWidthView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomDecrementButton(onDecrement: onDecrement),
+                  CustomIconButton(
+                    onChanged: onDecrement,
+                    iconData: Icons.remove,
+                  ),
                   SizedBox(width: 20),
-                  CustomDecrementButton(onDecrement: onIncrement),
+                  CustomIconButton(onChanged: onIncrement, iconData: Icons.add),
                 ],
               ),
             ],
