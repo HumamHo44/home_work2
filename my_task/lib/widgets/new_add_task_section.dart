@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:my_task/models/task_manager.dart';
 import 'package:my_task/models/task_model.dart';
 
-class NewAddTaskSection extends StatelessWidget {
+class NewAddTaskSection extends StatefulWidget {
   const NewAddTaskSection({
     super.key,
     required this.task,
-    required this.onToggle,
-    required this.onRemove,
+    required this.taskManager,
+    required this.onDelete,
   });
 
   final TaskModel task;
-  final void Function(TaskModel task) onToggle;
-  final void Function(TaskModel task) onRemove;
+  final TaskManager taskManager;
+  final VoidCallback onDelete;
+
+  @override
+  State<NewAddTaskSection> createState() => _NewAddTaskSectionState();
+}
+
+class _NewAddTaskSectionState extends State<NewAddTaskSection> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -41,25 +48,26 @@ class NewAddTaskSection extends StatelessWidget {
               ),
               activeColor: Colors.teal,
               checkColor: Colors.white,
-              value: task.isCompleted,
+              value: widget.task.isCompleted,
               onChanged: (value) {
-                onToggle(task);
+                widget.taskManager.taskCompletion(widget.task, value ?? false);
+                setState(() {});
               },
             ),
           ),
           title: Text(
-            task.title,
+            widget.task.title,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,
-              color: task.isCompleted ? Colors.grey : Colors.black,
-              decoration: task.isCompleted
+              color: widget.task.isCompleted ? Colors.grey : Colors.black,
+              decoration: widget.task.isCompleted
                   ? TextDecoration.lineThrough
                   : TextDecoration.none,
             ),
           ),
           subtitle: Text(
-            'Created: ${task.createdAt.day}/${task.createdAt.month}/${task.createdAt.year}',
+            'Created: ${widget.task.date.day}/${widget.task.date.month}/${widget.task.date.year}',
             style: const TextStyle(color: Color(0xFF757B79), fontSize: 13),
           ),
           trailing: IconButton(
@@ -69,7 +77,8 @@ class NewAddTaskSection extends StatelessWidget {
               size: 28,
             ),
             onPressed: () {
-              onRemove(task);
+              widget.taskManager.removeTask(widget.task);
+              widget.onDelete();
             },
           ),
         ),

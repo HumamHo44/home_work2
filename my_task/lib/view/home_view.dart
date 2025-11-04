@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_task/models/task_manager.dart';
-import 'package:my_task/models/task_model.dart';
 import 'package:my_task/view/new_task.dart';
+import 'package:my_task/widgets/empty_task_section.dart';
 import 'package:my_task/widgets/task_input_section.dart';
 
 class HomeView extends StatefulWidget {
@@ -12,34 +12,9 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  final TaskManager taskManager = TaskManager();
-  final TextEditingController taskController = TextEditingController();
-
-  void addTask() {
-    setState(() {
-      if (taskController.text.isNotEmpty) {
-        taskManager.addTask(taskController.text);
-      }
-    });
-    taskController.clear();
-  }
-
-  void taskCompletion(TaskModel task) {
-    setState(() {
-      taskManager.taskCompletion(task);
-    });
-  }
-
-  void taskRemove(TaskModel task) {
-    setState(() {
-      taskManager.removeTask(task);
-    });
-  }
-
-  @override
-  void dispose() {
-    taskController.dispose();
-    super.dispose();
+  TaskManager taskManager = TaskManager();
+  void onChanged() {
+    setState(() {});
   }
 
   @override
@@ -47,13 +22,14 @@ class _HomeViewState extends State<HomeView> {
     return Column(
       children: [
         Expanded(
-          child: NewTask(
-            tasks: taskManager.allTasks,
-            onToggle: taskCompletion,
-            onRemove: taskRemove,
-          ),
+          child: taskManager.tasks.isEmpty
+              ? EmptyTaskSection()
+              : NewTaskList(
+                  taskManager: taskManager,
+                  onAllTasksDeleted: onChanged,
+                ),
         ),
-        TaskInputSection(controller: taskController, onAddTask: addTask),
+        TaskInputSection(taskManager: taskManager, onChange: onChanged),
       ],
     );
   }

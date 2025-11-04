@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:my_task/models/task_manager.dart';
+import 'package:my_task/models/task_model.dart';
 
-class TaskInputSection extends StatelessWidget {
+class TaskInputSection extends StatefulWidget {
   const TaskInputSection({
     super.key,
-    required this.controller,
-    required this.onAddTask,
+    required this.taskManager,
+    required this.onChange,
   });
-  final TextEditingController controller;
-  final VoidCallback onAddTask;
+
+  final TaskManager taskManager;
+  final VoidCallback onChange;
+
+  @override
+  State<TaskInputSection> createState() => _TaskInputSectionState();
+}
+
+class _TaskInputSectionState extends State<TaskInputSection> {
+  String taskTitle = '';
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,7 +48,6 @@ class TaskInputSection extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: TextField(
-                    controller: controller,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(horizontal: 24),
                       border: InputBorder.none,
@@ -48,7 +57,9 @@ class TaskInputSection extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onSubmitted: (_) => onAddTask(),
+                    onChanged: (value) {
+                      taskTitle = value;
+                    },
                   ),
                 ),
               ),
@@ -61,7 +72,14 @@ class TaskInputSection extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
-                  onPressed: onAddTask,
+                  onPressed: () {
+                    TaskModel task = TaskModel(
+                      title: taskTitle,
+                      date: DateTime.now(),
+                    );
+                    widget.taskManager.addTask(task);
+                    widget.onChange();
+                  },
                   icon: Icon(Icons.add, size: 30),
                 ),
               ),

@@ -1,16 +1,18 @@
-class TaskModel {
-  final String id;
+import 'package:equatable/equatable.dart';
+
+class TaskModel extends Equatable {
   final String title;
+  final DateTime date;
   bool isCompleted;
-  final DateTime createdAt;
 
   TaskModel({
-    required this.id,
-    required this.createdAt,
+    required this.date,
     required this.title,
     this.isCompleted = false,
   });
-  void toggleCompletion() {
-    isCompleted = !isCompleted;
-  }
+
+  @override
+  List<Object?> get props => [title];
+
+  set taskCompletion(bool taskCompletion) {}
 }

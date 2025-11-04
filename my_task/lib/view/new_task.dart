@@ -1,31 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:my_task/models/task_model.dart';
-import 'package:my_task/widgets/empty_task_section.dart';
+import 'package:my_task/models/task_manager.dart';
 import 'package:my_task/widgets/new_add_task_section.dart';
 
-class NewTask extends StatelessWidget {
-  const NewTask({
+class NewTaskList extends StatefulWidget {
+  const NewTaskList({
     super.key,
-    required this.tasks,
-    required this.onToggle,
-    required this.onRemove,
+    required this.taskManager,
+    required this.onAllTasksDeleted,
   });
-  final List<TaskModel> tasks;
-  final void Function(TaskModel task) onToggle;
-  final void Function(TaskModel task) onRemove;
+  final TaskManager taskManager;
+  final VoidCallback onAllTasksDeleted;
+
+  @override
+  State<NewTaskList> createState() => _NewTaskListState();
+}
+
+class _NewTaskListState extends State<NewTaskList> {
   @override
   Widget build(BuildContext context) {
-    if (tasks.isEmpty) {
-      return EmptyTaskSection();
-    }
     return ListView.builder(
-      itemCount: tasks.length,
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      itemCount: widget.taskManager.tasks.length,
       itemBuilder: (context, index) {
-        final task = tasks[index];
+        final task = widget.taskManager.tasks[index];
         return NewAddTaskSection(
           task: task,
-          onToggle: onToggle,
-          onRemove: onRemove,
+          taskManager: widget.taskManager,
+          onDelete: () {
+            if (widget.taskManager.tasks.isEmpty) {
+              widget.onAllTasksDeleted();
+            } else {
+              setState(() {});
+            }
+          },
         );
       },
     );
